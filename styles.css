@@ -21,10 +21,24 @@ header {
 #city-input {
     padding: 0.5rem;
     width: 80%;
-    max-width: 400px;
+    max-width: 300px;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#add-favorite {
+    padding: 0.5rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#add-favorite:hover {
+    background-color: #45a049;
 }
 
 #weather-info {
@@ -67,7 +81,29 @@ header {
     font-weight: bold;
 }
 
-/* Responsive Design */
+.recent-searches, .favorites {
+    margin: 2rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recent-searches ul, .favorites ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.recent-searches li, .favorites li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.recent-searches li:hover, .favorites li:hover {
+    background-color: #f0f0f0;
+}
+
 @media (max-width: 600px) {
     #city-input {
         width: 90%;
