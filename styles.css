@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background: linear-gradient(to bottom, #4CAF50, #f0f0f0);
     color: #333;
 }
 
@@ -24,6 +24,7 @@ header {
     max-width: 400px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #weather-info {
@@ -58,6 +59,12 @@ header {
 #weather-info p {
     font-size: 1.2rem;
     margin: 0.5rem 0;
+}
+
+#weather-info .error {
+    color: red;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 /* Responsive Design */
