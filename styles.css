@@ -35,6 +35,7 @@ header {
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #add-favorite:hover {
@@ -51,7 +52,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out, background-color 0.5s ease-in-out;
     opacity: 0;
 }
 
@@ -98,10 +99,42 @@ header {
     padding: 0.5rem;
     border-bottom: 1px solid #ddd;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
 }
 
 .recent-searches li:hover, .favorites li:hover {
     background-color: #f0f0f0;
+}
+
+#clear-recent-searches {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#clear-recent-searches:hover {
+    background-color: #d32f2f;
+}
+
+.remove-favorite {
+    margin-left: 1rem;
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-favorite:hover {
+    background-color: #d32f2f;
 }
 
 @media (max-width: 600px) {
