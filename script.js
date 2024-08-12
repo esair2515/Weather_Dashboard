@@ -6,7 +6,16 @@ document.getElementById('city-input').addEventListener('keypress', function(e) {
             displayError('Please enter a city name.');
         } else {
             displayMockWeatherData(cityName);
+            addToRecentSearches(cityName);
         }
+    }
+});
+
+document.getElementById('add-favorite').addEventListener('click', function() {
+    const cityName = document.getElementById('city-input').value.trim();
+    
+    if (cityName !== '') {
+        addToFavorites(cityName);
     }
 });
 
@@ -46,4 +55,32 @@ function displayError(message) {
     const weatherInfoDiv = document.getElementById('weather-info');
     weatherInfoDiv.innerHTML = `<p class="error">${message}</p>`;
     weatherInfoDiv.classList.add('visible');
+}
+
+function addToRecentSearches(city) {
+    const recentSearchesList = document.getElementById('recent-searches-list');
+    
+    // Create a new list item
+    const listItem = document.createElement('li');
+    listItem.textContent = city;
+    listItem.addEventListener('click', () => {
+        displayMockWeatherData(city);
+    });
+
+    // Add to the beginning of the list
+    recentSearchesList.insertBefore(listItem, recentSearchesList.firstChild);
+}
+
+function addToFavorites(city) {
+    const favoritesList = document.getElementById('favorites-list');
+
+    // Create a new list item
+    const listItem = document.createElement('li');
+    listItem.textContent = city;
+    listItem.addEventListener('click', () => {
+        displayMockWeatherData(city);
+    });
+
+    // Add to the list
+    favoritesList.appendChild(listItem);
 }
