@@ -50,6 +50,31 @@ header {
     height: 100px;
 }
 
+.forecast-container {
+    margin: 2rem;
+    text-align: center;
+}
+
+#forecast-list {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.forecast-item {
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    width: 100px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.forecast-item img {
+    width: 50px;
+    height: 50px;
+}
+
 .recent-searches, .favorites {
     margin: 1rem 2rem;
 }
