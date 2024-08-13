@@ -268,3 +268,61 @@ function importData(file) {
 
     reader.readAsText(file);
 }
+document.addEventListener('DOMContentLoaded', () => {
+    // Enable keyboard accessibility for file import
+    const importDataLabel = document.getElementById('import-data-label');
+    importDataLabel.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            document.getElementById('import-data').click();
+        }
+    });
+
+    // ARIA live regions for updates
+    const cityNameElement = document.getElementById('city-name');
+    const temperatureElement = document.getElementById('temperature');
+    const descriptionElement = document.getElementById('description');
+
+    function updateWeatherInfo(city, temperature, description, iconSrc) {
+        cityNameElement.textContent = city;
+        temperatureElement.textContent = `${temperature.toFixed(1)}°${tempUnit}`;
+        descriptionElement.textContent = description;
+        document.getElementById('weather-icon').src = iconSrc;
+
+        cityNameElement.setAttribute('aria-label', `City: ${city}`);
+        temperatureElement.setAttribute('aria-label', `Temperature: ${temperature.toFixed(1)}°${tempUnit}`);
+        descriptionElement.setAttribute('aria-label', `Description: ${description}`);
+    }
+
+    // Update the weekly forecast with ARIA support
+    function displayWeeklyForecast(city) {
+        const forecastList = document.getElementById('forecast-list');
+        forecastList.innerHTML = '';
+
+        const weeklyForecast = [
+            { day: 'Monday', temp: tempUnit === 'C' ? 20 : (20 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' },
+            { day: 'Tuesday', temp: tempUnit === 'C' ? 22 : (22 * 9/5) + 32, description: 'Cloudy', icon: 'cloudy-icon.png' },
+            { day: 'Wednesday', temp: tempUnit === 'C' ? 24 : (24 * 9/5) + 32, description: 'Rainy', icon: 'rainy-icon.png' },
+            { day: 'Thursday', temp: tempUnit === 'C' ? 21 : (21 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' },
+            { day: 'Friday', temp: tempUnit === 'C' ? 23 : (23 * 9/5) + 32, description: 'Cloudy', icon: 'cloudy-icon.png' },
+            { day: 'Saturday', temp: tempUnit === 'C' ? 25 : (25 * 9/5) + 32, description: 'Rainy', icon: 'rainy-icon.png' },
+            { day: 'Sunday', temp: tempUnit === 'C' ? 26 : (26 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' }
+        ];
+
+        weeklyForecast.forEach(day => {
+            const forecastItem = document.createElement('div');
+            forecastItem.classList.add('forecast-item');
+            forecastItem.setAttribute('role', 'listitem');
+
+            forecastItem.innerHTML = `
+                <h4>${day.day}</h4>
+                <img src="${day.icon}" alt="${day.description}" aria-hidden="true">
+                <p aria-label="Temperature: ${day.temp.toFixed(1)}°${tempUnit}">${day.temp.toFixed(1)}°${tempUnit}</p>
+                <p aria-label="Condition: ${day.description}">${day.description}</p>
+            `;
+
+            forecastList.appendChild(forecastItem);
+        });
+    }
+});
+
