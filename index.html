@@ -9,6 +9,7 @@
 <body>
     <header>
         <h1>Weather Dashboard</h1>
+        <button id="toggle-temp">°C / °F</button>
     </header>
     <main>
         <div class="search-container">
@@ -17,20 +18,15 @@
         </div>
         <div id="weather-info">
             <div id="loading-spinner" class="spinner"></div>
-            <!-- Weather data will be dynamically inserted here -->
         </div>
         <div class="recent-searches">
             <h3>Recent Searches</h3>
             <button id="clear-recent-searches">Clear Recent Searches</button>
-            <ul id="recent-searches-list">
-                <!-- Recent searches will be dynamically inserted here -->
-            </ul>
+            <ul id="recent-searches-list"></ul>
         </div>
         <div class="favorites">
             <h3>Favorite Cities</h3>
-            <ul id="favorites-list">
-                <!-- Favorite cities will be dynamically inserted here -->
-            </ul>
+            <ul id="favorites-list"></ul>
         </div>
     </main>
     <script src="script.js"></script>
