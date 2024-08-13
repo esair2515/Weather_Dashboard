@@ -7,37 +7,53 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <header role="banner">
         <h1>Weather Dashboard</h1>
-        <button id="toggle-temp">°C / °F</button>
     </header>
-    <main>
+
+    <main role="main">
         <div class="search-container">
-            <input type="text" id="city-input" placeholder="Enter city name">
-            <button id="add-favorite">Add to Favorites</button>
+            <input id="city-input" type="text" placeholder="Enter city name" aria-label="Enter city name">
+            <button id="add-favorite" aria-label="Add to favorites">Add to Favorites</button>
+            <button id="toggle-temp" aria-label="Toggle temperature unit">Toggle °C/°F</button>
         </div>
-        <div id="weather-info">
-            <div id="loading-spinner" class="spinner"></div>
+
+        <div id="weather-info" aria-live="polite">
+            <h2 id="city-name" aria-label="City name"></h2>
+            <img id="weather-icon" alt="Weather icon" aria-hidden="true">
+            <p id="temperature" aria-label="Current temperature"></p>
+            <p id="description" aria-label="Weather description"></p>
+            <p id="humidity" aria-label="Humidity level"></p>
+            <p id="wind-speed" aria-label="Wind speed"></p>
+            <p id="sunrise" aria-label="Sunrise time"></p>
+            <p id="sunset" aria-label="Sunset time"></p>
         </div>
-        <div id="weekly-forecast" class="forecast-container">
+
+        <section class="forecast-container" aria-label="Weekly forecast">
             <h3>Weekly Forecast</h3>
-            <div id="forecast-list" class="forecast-list"></div>
-        </div>
-        <div class="recent-searches">
-            <h3>Recent Searches</h3>
-            <button id="clear-recent-searches">Clear Recent Searches</button>
-            <ul id="recent-searches-list"></ul>
-        </div>
-        <div class="favorites">
-            <h3>Favorite Cities</h3>
-            <ul id="favorites-list"></ul>
-        </div>
+            <div id="forecast-list" role="list"></div>
+        </section>
+
+        <section class="recent-searches" aria-labelledby="recent-searches-heading">
+            <h3 id="recent-searches-heading">Recent Searches</h3>
+            <ul id="recent-searches-list" role="list"></ul>
+            <button id="clear-recent-searches" aria-label="Clear recent searches">Clear Recent Searches</button>
+        </section>
+
+        <section class="favorites" aria-labelledby="favorites-heading">
+            <h3 id="favorites-heading">Favorites</h3>
+            <ul id="favorites-list" role="list"></ul>
+        </section>
+
+        <div class="spinner" id="loading-spinner" role="alert" aria-live="assertive" aria-label="Loading"></div>
     </main>
-    <footer>
-        <button id="export-data">Export Data</button>
-        <button id="import-data">Import Data</button>
-        <input type="file" id="import-file" accept=".json" style="display: none;">
+
+    <footer role="contentinfo">
+        <button id="export-data" aria-label="Export data">Export Data</button>
+        <input type="file" id="import-data" aria-label="Import data" style="display:none">
+        <label for="import-data" id="import-data-label" tabindex="0">Import Data</label>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
