@@ -183,3 +183,20 @@ footer {
         align-items: flex-start;
     }
 }
+/* Accessibility Enhancements */
+button:focus, input:focus, label:focus {
+    outline: 3px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+button[aria-label]:hover::after, input[aria-label]:hover::after {
+    content: attr(aria-label);
+    position: absolute;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    white-space: nowrap;
+}
+
