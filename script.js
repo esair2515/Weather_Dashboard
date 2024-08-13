@@ -45,6 +45,18 @@ document.getElementById('clear-recent-searches').addEventListener('click', funct
     clearRecentSearches();
 });
 
+document.getElementById('export-data').addEventListener('click', function() {
+    exportData();
+});
+
+document.getElementById('import-data').addEventListener('click', function() {
+    document.getElementById('import-file').click();
+});
+
+document.getElementById('import-file').addEventListener('change', function(event) {
+    importData(event.target.files[0]);
+});
+
 function displayMockWeatherData(city) {
     const weatherInfoDiv = document.getElementById('weather-info');
     hideLoadingSpinner();
@@ -114,73 +126,4 @@ function addToRecentSearches(city) {
     listItem.textContent = city;
 
     recentSearchesList.prepend(listItem);
-}
-
-function saveRecentSearches() {
-    const recentSearchesList = document.getElementById('recent-searches-list');
-    const cities = [];
-
-    recentSearchesList.querySelectorAll('li').forEach(li => {
-        cities.push(li.textContent);
-    });
-
-    localStorage.setItem('recentSearches', JSON.stringify(cities));
-}
-
-function loadRecentSearches() {
-    const recentSearches = JSON.parse(localStorage.getItem('recentSearches'));
-    if (recentSearches) {
-        recentSearches.forEach(city => addToRecentSearches(city));
-    }
-}
-
-function clearRecentSearches() {
-    const recentSearchesList = document.getElementById('recent-searches-list');
-    recentSearchesList.innerHTML = '';
-    localStorage.removeItem('recentSearches');
-}
-
-function addToFavorites(city) {
-    const favoritesList = document.getElementById('favorites-list');
-
-    const existingItem = Array.from(favoritesList.children).find(li => li.textContent.includes(city));
-    if (existingItem) {
-        existingItem.remove();
-    }
-
-    const listItem = document.createElement('li');
-    listItem.textContent = city;
-
-    const removeButton = document.createElement('button');
-    removeButton.classList.add('remove-favorite');
-    removeButton.textContent = 'Remove';
-    removeButton.addEventListener('click', () => {
-        listItem.remove();
-        saveFavorites();
-    });
-
-    listItem.appendChild(removeButton);
-    favoritesList.appendChild(listItem);
-}
-
-function saveFavorites() {
-    const favoritesList = document.getElementById('favorites-list');
-    const cities = [];
-
-    favoritesList.querySelectorAll('li').forEach(li => {
-        cities.push(li.firstChild.textContent);
-    });
-
-    localStorage.setItem('favorites', JSON.stringify(cities));
-}
-
-function loadFavorites() {
-    const favorites = JSON.parse(localStorage.getItem('favorites'));
-    if (favorites) {
-        favorites.forEach(city => addToFavorites(city));
-    }
-}
-
-function clearInput() {
-    document.getElementById('city-input').value = '';
 }
