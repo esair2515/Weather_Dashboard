@@ -325,4 +325,157 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    let tempUnit = 'C';
+    const theme = localStorage.getItem('theme') || 'light';
+    const unit = localStorage.getItem('unit') || 'celsius';
+    const language = localStorage.getItem('language') || 'en';
+
+    // Apply saved settings
+    applyTheme(theme);
+    applyUnit(unit);
+    applyLanguage(language);
+
+    // Open and close settings panel
+    const settingsButton = document.getElementById('settings-button');
+    const settingsPanel = document.getElementById('settings-panel');
+    const closeSettingsButton = document.getElementById('close-settings');
+
+    settingsButton.addEventListener('click', () => {
+        settingsPanel.style.display = 'block';
+    });
+
+    closeSettingsButton.addEventListener('click', () => {
+        settingsPanel.style.display = 'none';
+    });
+
+    // Theme change
+    const themeSelect = document.getElementById('theme-select');
+    themeSelect.value = theme;
+    themeSelect.addEventListener('change', (e) => {
+        const selectedTheme = e.target.value;
+        applyTheme(selectedTheme);
+        localStorage.setItem('theme', selectedTheme);
+    });
+
+    // Unit change
+    const unitSelect = document.getElementById('unit-select');
+    unitSelect.value = unit;
+    unitSelect.addEventListener('change', (e) => {
+        const selectedUnit = e.target.value;
+        applyUnit(selectedUnit);
+        localStorage.setItem('unit', selectedUnit);
+    });
+
+    // Language change
+    const languageSelect = document.getElementById('language-select');
+    languageSelect.value = language;
+    languageSelect.addEventListener('change', (e) => {
+        const selectedLanguage = e.target.value;
+        applyLanguage(selectedLanguage);
+        localStorage.setItem('language', selectedLanguage);
+    });
+
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }
+
+    function applyUnit(unit) {
+        tempUnit = unit === 'celsius' ? 'C' : 'F';
+        document.getElementById('toggle-temp').textContent = `Toggle ${tempUnit === 'C' ? '°F' : '°C'}`;
+    }
+
+    function applyLanguage(language) {
+        const translations = {
+            en: {
+                cityPlaceholder: "Enter city name",
+                addFavorite: "Add to Favorites",
+                toggleTemp: "Toggle °C/°F",
+                recentSearches: "Recent Searches",
+                clearRecentSearches: "Clear Recent Searches",
+                favorites: "Favorites",
+                exportData: "Export Data",
+                importData: "Import Data",
+                weeklyForecast: "Weekly Forecast",
+                closeSettings: "Close",
+                settingsHeading: "Settings",
+                theme: "Theme:",
+                unit: "Temperature Unit:",
+                language: "Language:"
+            },
+            es: {
+                cityPlaceholder: "Ingrese el nombre de la ciudad",
+                addFavorite: "Añadir a Favoritos",
+                toggleTemp: "Alternar °C/°F",
+                recentSearches: "Búsquedas Recientes",
+                clearRecentSearches: "Borrar Búsquedas Recientes",
+                favorites: "Favoritos",
+                exportData: "Exportar Datos",
+                importData: "Importar Datos",
+                weeklyForecast: "Pronóstico Semanal",
+                closeSettings: "Cerrar",
+                settingsHeading: "Configuraciones",
+                theme: "Tema:",
+                unit: "Unidad de Temperatura:",
+                language: "Idioma:"
+            },
+            fr: {
+                cityPlaceholder: "Entrez le nom de la ville",
+                addFavorite: "Ajouter aux Favoris",
+                toggleTemp: "Basculer °C/°F",
+                recentSearches: "Recherches Récentes",
+                clearRecentSearches: "Effacer les Recherches Récentes",
+                favorites: "Favoris",
+                exportData: "Exporter des Données",
+                importData: "Importer des Données",
+                weeklyForecast: "Prévisions Hebdomadaires",
+                closeSettings: "Fermer",
+                settingsHeading: "Paramètres",
+                theme: "Thème:",
+                unit: "Unité de Température:",
+                language: "Langue:"
+            },
+            de: {
+                cityPlaceholder: "Stadtnamen eingeben",
+                addFavorite: "Zu Favoriten hinzufügen",
+                toggleTemp: "Wechseln °C/°F",
+                recentSearches: "Kürzliche Suchanfragen",
+                clearRecentSearches: "Suchverlauf löschen",
+                favorites: "Favoriten",
+                exportData: "Daten exportieren",
+                importData: "Daten importieren",
+                weeklyForecast: "Wöchentliche Vorhersage",
+                closeSettings: "Schließen",
+                settingsHeading: "Einstellungen",
+                theme: "Thema:",
+                unit: "Temperatureinheit:",
+                language: "Sprache:"
+            }
+        };
+
+        const translation = translations[language];
+
+        document.getElementById('city-input').placeholder = translation.cityPlaceholder;
+        document.getElementById('add-favorite').textContent = translation.addFavorite;
+        document.getElementById('toggle-temp').textContent = translation.toggleTemp;
+        document.getElementById('recent-searches-heading').textContent = translation.recentSearches;
+        document.getElementById('clear-recent-searches').textContent = translation.clearRecentSearches;
+        document.getElementById('favorites-heading').textContent = translation.favorites;
+        document.getElementById('export-data').textContent = translation.exportData;
+        document.getElementById('import-data-label').textContent = translation.importData;
+        document.querySelector('.forecast-container h3').textContent = translation.weeklyForecast;
+        document.getElementById('close-settings').textContent = translation.closeSettings;
+        document.getElementById('settings-heading').textContent = translation.settingsHeading;
+        document.querySelector('label[for="theme-select"]').textContent = translation.theme;
+        document.querySelector('label[for="unit-select"]').textContent = translation.unit;
+        document.querySelector('label[for="language-select"]').textContent = translation.language;
+    }
+
+    // The rest of your existing code for updating weather info, weekly forecast, etc.
+});
+
 
