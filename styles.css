@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -21,7 +22,8 @@ header {
 #city-input {
     padding: 0.5rem;
     font-size: 1rem;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
 }
 
 #add-favorite, #toggle-temp, #clear-recent-searches, #export-data, #import-data {
@@ -57,6 +59,7 @@ header {
 
 #forecast-list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-top: 1rem;
 }
@@ -68,6 +71,7 @@ header {
     width: 100px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
 }
 
 .forecast-item img {
@@ -139,4 +143,43 @@ header {
 footer {
     margin: 2rem;
     text-align: center;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    header, .search-container, .forecast-container, .recent-searches, .favorites, footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    #forecast-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .forecast-item {
+        width: 80%;
+        margin-bottom: 1rem;
+    }
+
+    .search-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #add-favorite, #toggle-temp, #clear-recent-searches, #export-data, #import-data {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .recent-searches h3, .favorites h3 {
+        text-align: center;
+    }
+
+    #recent-searches-list li, #favorites-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
