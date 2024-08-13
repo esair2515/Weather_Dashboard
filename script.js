@@ -10,7 +10,10 @@ document.getElementById('toggle-temp').addEventListener('click', function() {
     document.getElementById('toggle-temp').textContent = tempUnit === 'C' ? '°C / °F' : '°F / °C';
     
     const cityName = document.querySelector('#weather-info h2')?.textContent;
-    if (cityName) displayMockWeatherData(cityName);
+    if (cityName) {
+        displayMockWeatherData(cityName);
+        displayWeeklyForecast(cityName);
+    }
 });
 
 document.getElementById('city-input').addEventListener('keypress', function(e) {
@@ -23,6 +26,7 @@ document.getElementById('city-input').addEventListener('keypress', function(e) {
             showLoadingSpinner();
             setTimeout(() => {
                 displayMockWeatherData(cityName);
+                displayWeeklyForecast(cityName);
                 addToRecentSearches(cityName);
                 saveRecentSearches();
                 clearInput();
@@ -92,26 +96,47 @@ function displayMockWeatherData(city) {
         <p>Sunrise: ${mockData.sunrise}</p>
         <p>Sunset: ${mockData.sunset}</p>
     `;
-
-    weatherInfoDiv.classList.add('visible');
 }
 
-function displayError(message) {
-    const weatherInfoDiv = document.getElementById('weather-info');
-    hideLoadingSpinner();
-    weatherInfoDiv.innerHTML = `<p class="error">${message}</p>`;
-    weatherInfoDiv.classList.add('visible');
+function displayWeeklyForecast(city) {
+    const forecastList = document.getElementById('forecast-list');
+    forecastList.innerHTML = '';
+
+    const weeklyForecast = [
+        { day: 'Monday', temp: tempUnit === 'C' ? 20 : (20 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' },
+        { day: 'Tuesday', temp: tempUnit === 'C' ? 22 : (22 * 9/5) + 32, description: 'Cloudy', icon: 'cloudy-icon.png' },
+        { day: 'Wednesday', temp: tempUnit === 'C' ? 24 : (24 * 9/5) + 32, description: 'Rainy', icon: 'rainy-icon.png' },
+        { day: 'Thursday', temp: tempUnit === 'C' ? 21 : (21 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' },
+        { day: 'Friday', temp: tempUnit === 'C' ? 23 : (23 * 9/5) + 32, description: 'Cloudy', icon: 'cloudy-icon.png' },
+        { day: 'Saturday', temp: tempUnit === 'C' ? 25 : (25 * 9/5) + 32, description: 'Rainy', icon: 'rainy-icon.png' },
+        { day: 'Sunday', temp: tempUnit === 'C' ? 26 : (26 * 9/5) + 32, description: 'Sunny', icon: 'sunny-icon.png' }
+    ];
+
+    weeklyForecast.forEach(day => {
+        const forecastItem = document.createElement('div');
+        forecastItem.classList.add('forecast-item');
+
+        forecastItem.innerHTML = `
+            <h4>${day.day}</h4>
+            <img src="${day.icon}" alt="${day.description}">
+            <p>${day.temp.toFixed(1)}°${tempUnit}</p>
+            <p>${day.description}</p>
+        `;
+
+        forecastList.appendChild(forecastItem);
+    });
 }
 
 function showLoadingSpinner() {
-    const spinner = document.getElementById('loading-spinner');
-    spinner.style.display = 'block';
-    document.getElementById('weather-info').classList.remove('visible');
+    document.getElementById('loading-spinner').style.display = 'block';
 }
 
 function hideLoadingSpinner() {
-    const spinner = document.getElementById('loading-spinner');
-    spinner.style.display = 'none';
+    document.getElementById('loading-spinner').style.display = 'none';
+}
+
+function displayError(message) {
+    alert(message);
 }
 
 function addToRecentSearches(city) {
