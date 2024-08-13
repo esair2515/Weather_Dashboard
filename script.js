@@ -10,10 +10,13 @@ document.getElementById('city-input').addEventListener('keypress', function(e) {
         if (cityName === '') {
             displayError('Please enter a city name.');
         } else {
-            displayMockWeatherData(cityName);
-            addToRecentSearches(cityName);
-            saveRecentSearches();
-            clearInput();
+            showLoadingSpinner();
+            setTimeout(() => {
+                displayMockWeatherData(cityName);
+                addToRecentSearches(cityName);
+                saveRecentSearches();
+                clearInput();
+            }, 1000);  // Simulate API delay
         }
     }
 });
@@ -34,6 +37,7 @@ document.getElementById('clear-recent-searches').addEventListener('click', funct
 
 function displayMockWeatherData(city) {
     const weatherInfoDiv = document.getElementById('weather-info');
+    hideLoadingSpinner();
 
     // Clear previous data
     weatherInfoDiv.innerHTML = '';
@@ -44,9 +48,10 @@ function displayMockWeatherData(city) {
         temp: 22,
         description: 'Sunny',
         humidity: 40,
-        windSpeed: 10,       // in m/s
+        windSpeed: 10,
         sunrise: '6:00 AM',
         sunset: '8:00 PM',
+        icon: 'sunny-icon.png' // Example icon
     };
 
     // Update background based on weather
@@ -59,7 +64,7 @@ function displayMockWeatherData(city) {
     }
 
     weatherInfoDiv.innerHTML = `
-        <img src="path/to/sunny-icon.png" alt="Sunny">
+        <img src="${mockData.icon}" alt="${mockData.description}">
         <h2>${mockData.name}</h2>
         <p>Temperature: ${mockData.temp}°C</p>
         <p>Description: ${mockData.description}</p>
@@ -69,25 +74,39 @@ function displayMockWeatherData(city) {
         <p>Sunset: ${mockData.sunset}</p>
     `;
 
-    // Add visible class to trigger transition
     weatherInfoDiv.classList.add('visible');
 }
 
 function displayError(message) {
     const weatherInfoDiv = document.getElementById('weather-info');
+    hideLoadingSpinner();
     weatherInfoDiv.innerHTML = `<p class="error">${message}</p>`;
     weatherInfoDiv.classList.add('visible');
 }
 
+function showLoadingSpinner() {
+    const spinner = document.getElementById('loading-spinner');
+    spinner.style.display = 'block';
+    document.getElementById('weather-info').classList.remove('visible');
+}
+
+function hideLoadingSpinner() {
+    const spinner = document.getElementById('loading-spinner');
+    spinner.style.display = 'none';
+}
+
 function addToRecentSearches(city) {
     const recentSearchesList = document.getElementById('recent-searches-list');
-    
+
+    // Check if the city is already in the recent searches
+    const existingItem = Array.from(recentSearchesList.children).find(li => li.textContent.includes(city));
+    if (existingItem) {
+        existingItem.remove();
+    }
+
     // Create a new list item
     const listItem = document.createElement('li');
     listItem.textContent = city;
-    listItem.addEventListener('click', () => {
-        displayMockWeatherData(city);
-    });
 
     // Add the list item to the recent searches list
     recentSearchesList.prepend(listItem);
