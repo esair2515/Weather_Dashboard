@@ -1,6 +1,16 @@
+let tempUnit = 'C';
+
 document.addEventListener('DOMContentLoaded', () => {
     loadFavorites();
     loadRecentSearches();
+});
+
+document.getElementById('toggle-temp').addEventListener('click', function() {
+    tempUnit = tempUnit === 'C' ? 'F' : 'C';
+    document.getElementById('toggle-temp').textContent = tempUnit === 'C' ? '°C / °F' : '°F / °C';
+    
+    const cityName = document.querySelector('#weather-info h2')?.textContent;
+    if (cityName) displayMockWeatherData(cityName);
 });
 
 document.getElementById('city-input').addEventListener('keypress', function(e) {
@@ -16,7 +26,7 @@ document.getElementById('city-input').addEventListener('keypress', function(e) {
                 addToRecentSearches(cityName);
                 saveRecentSearches();
                 clearInput();
-            }, 1000);  // Simulate API delay
+            }, 1000);
         }
     }
 });
@@ -39,34 +49,31 @@ function displayMockWeatherData(city) {
     const weatherInfoDiv = document.getElementById('weather-info');
     hideLoadingSpinner();
 
-    // Clear previous data
     weatherInfoDiv.innerHTML = '';
 
-    // Mock data
     const mockData = {
         name: city,
-        temp: 22,
+        temp: tempUnit === 'C' ? 22 : (22 * 9/5) + 32,
         description: 'Sunny',
         humidity: 40,
         windSpeed: 10,
         sunrise: '6:00 AM',
         sunset: '8:00 PM',
-        icon: 'sunny-icon.png' // Example icon
+        icon: 'sunny-icon.png'
     };
 
-    // Update background based on weather
     if (mockData.description.toLowerCase() === 'sunny') {
-        weatherInfoDiv.style.backgroundColor = '#FFD700'; // Gold
+        weatherInfoDiv.style.backgroundColor = '#FFD700';
     } else if (mockData.description.toLowerCase() === 'cloudy') {
-        weatherInfoDiv.style.backgroundColor = '#C0C0C0'; // Silver
+        weatherInfoDiv.style.backgroundColor = '#C0C0C0';
     } else if (mockData.description.toLowerCase() === 'rainy') {
-        weatherInfoDiv.style.backgroundColor = '#87CEFA'; // Light Sky Blue
+        weatherInfoDiv.style.backgroundColor = '#87CEFA';
     }
 
     weatherInfoDiv.innerHTML = `
         <img src="${mockData.icon}" alt="${mockData.description}">
         <h2>${mockData.name}</h2>
-        <p>Temperature: ${mockData.temp}°C</p>
+        <p>Temperature: ${mockData.temp.toFixed(1)}°${tempUnit}</p>
         <p>Description: ${mockData.description}</p>
         <p>Humidity: ${mockData.humidity}%</p>
         <p>Wind Speed: ${mockData.windSpeed} m/s</p>
@@ -98,17 +105,14 @@ function hideLoadingSpinner() {
 function addToRecentSearches(city) {
     const recentSearchesList = document.getElementById('recent-searches-list');
 
-    // Check if the city is already in the recent searches
     const existingItem = Array.from(recentSearchesList.children).find(li => li.textContent.includes(city));
     if (existingItem) {
         existingItem.remove();
     }
 
-    // Create a new list item
     const listItem = document.createElement('li');
     listItem.textContent = city;
 
-    // Add the list item to the recent searches list
     recentSearchesList.prepend(listItem);
 }
 
@@ -138,29 +142,24 @@ function clearRecentSearches() {
 
 function addToFavorites(city) {
     const favoritesList = document.getElementById('favorites-list');
-    
-    // Check if the city is already in the favorites
+
     const existingItem = Array.from(favoritesList.children).find(li => li.textContent.includes(city));
     if (existingItem) {
-        return;
+        existingItem.remove();
     }
 
-    // Create a new list item
     const listItem = document.createElement('li');
     listItem.textContent = city;
-    
-    // Add remove button
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'Remove';
-    removeBtn.classList.add('remove-favorite');
-    removeBtn.addEventListener('click', () => {
+
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('remove-favorite');
+    removeButton.textContent = 'Remove';
+    removeButton.addEventListener('click', () => {
         listItem.remove();
         saveFavorites();
     });
 
-    listItem.appendChild(removeBtn);
-
-    // Add the list item to the favorites list
+    listItem.appendChild(removeButton);
     favoritesList.appendChild(listItem);
 }
 
@@ -169,7 +168,7 @@ function saveFavorites() {
     const cities = [];
 
     favoritesList.querySelectorAll('li').forEach(li => {
-        cities.push(li.textContent.replace('Remove', '').trim());
+        cities.push(li.firstChild.textContent);
     });
 
     localStorage.setItem('favorites', JSON.stringify(cities));
