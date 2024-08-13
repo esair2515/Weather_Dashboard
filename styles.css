@@ -24,7 +24,7 @@ header {
     width: 300px;
 }
 
-#add-favorite, #toggle-temp, #clear-recent-searches {
+#add-favorite, #toggle-temp, #clear-recent-searches, #export-data, #import-data {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     background-color: #4CAF50;
@@ -34,7 +34,7 @@ header {
     margin-left: 0.5rem;
 }
 
-#add-favorite:hover, #toggle-temp:hover, #clear-recent-searches:hover {
+#add-favorite:hover, #toggle-temp:hover, #clear-recent-searches:hover, #export-data:hover, #import-data:hover {
     background-color: #45a049;
 }
 
@@ -109,4 +109,9 @@ header {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+footer {
+    margin: 2rem;
+    text-align: center;
 }
